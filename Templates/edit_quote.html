@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Edit Quote</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #fff8dc;
+            color: black;
+        }
+        .bg-custom {
+            background-color: #4169e1 !important;
+        }
+        .text-custom {
+            color: black !important;
+        }
+        .btn-custom {
+            background-color: black;
+            color: #fff8dc;
+        }
+        .container-custom {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 5%;
+        }
+        .form-container {
+            background-color: #fff8dc;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="container-fluid d-flex flex-column align-items-center full-height h-100 bg-custom">
+    <div class="mt-5 container-custom">
+        <div class="form-container">
+            <h1 class="text-center mb-4 text-custom">Edit Quote</h1>
+            <form action="/edit" method="POST">
+                <input type="hidden" id="_id" name="_id" value="{{data["_id"]}}" />
+                <div class="mb-3">
+                    <label for="text" class="form-label text-custom">Quote:</label>
+                    <textarea id="text" name="text" cols="40" rows="5" class="form-control bg-primary-subtle text-custom">{{data["text"]}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label text-custom">Author:</label>
+                    <input type="text" id="author" name="author" class="form-control bg-primary-subtle text-custom" value="{{data["author"]}}"/>        
+                </div>
+                <div class="mb-3">
+                    <label for="pubCheck" class="form-label text-custom">Public</label>
+                    <input type="checkbox" id="pubCheck" name="public" class="form-check-input bg-primary-subtle text-custom" {% if data.get('public', False) %} checked {% endif %}/>        
+                </div>
+                <div class="mb-3">
+                    <label for="allow_comments" class="form-label text-custom">Allow Comments:</label>
+                    <input type="checkbox" id="allow_comments" name="allow_comments" value="true" class="form-check-input bg-primary-subtle text-custom"/>        
+                </div>
+                <button type="submit" class="btn btn-custom">Update</button>
+                <br>
+                <a href="/" class="text-danger align-self-center mt-5">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

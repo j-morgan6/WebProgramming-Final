@@ -1,0 +1,22 @@
+2024-05-12 20:26:10,295 - INFO - All quotes in the quotes collection:
+2024-05-12 20:38:37,860 - INFO - All quotes in the quotes collection:
+2024-05-12 20:38:37,863 - INFO - {'_id': ObjectId('664118f1017af632f85e82fc'), 'owner': 'jmorga50', 'text': 'im patrick', 'author': 'Patrick star', 'public': False, 'date_added': datetime.datetime(2024, 5, 12, 15, 30, 57, 597000)}
+2024-05-12 20:38:37,864 - INFO - {'_id': ObjectId('66414033f88a8324a41d278a'), 'owner': 'jmorga50', 'text': 'tofu', 'author': 'Kim', 'public': False, 'date_added': datetime.datetime(2024, 5, 12, 18, 18, 27, 970000)}
+2024-05-12 20:38:37,864 - INFO - {'owner': 'jmorga50', 'text': 'hi', 'author': 'Joe', 'public': True, 'date_added': datetime.datetime(2024, 5, 12, 19, 3, 14, 631269), '_id': ObjectId('66414ab23a9742ca9ba25b08')}
+2024-05-12 20:38:37,864 - INFO - {'owner': 'kimlin', 'text': 'hello', 'author': 'Kim', 'public': False, 'date_added': datetime.datetime(2024, 5, 12, 20, 38, 37, 857622), '_id': ObjectId('6641610d3a9742ca9ba25b11')}
+2024-05-12 20:40:56,328 - INFO - All entries in the user collection:
+2024-05-12 20:40:56,329 - INFO - {'_id': ObjectId('664118cc017af632f85e82f7'), 'user': 'jmorga50', 'pass': '2435ef82b975d852c2b73c085d12442b0bbb23a53eef00d02aa7c3bd23f6dc2d', 'salt': 'f46D7ECf67B6Fe7C5CBDc6343ABDD49f'}
+2024-05-12 20:40:56,329 - INFO - {'user': 'Kim', 'pass': '18892082535dbd4f140f7b4fb963a1fe1b21be8d0c279d9916650a6d3b60a6ea', 'salt': '9f00BA786c6910bb6b8c9EA39a2aC4fA', '_id': ObjectId('66414ac73a9742ca9ba25b09')}
+2024-05-12 20:40:56,330 - INFO - {'user': 'kimlin', 'pass': '3ce733831a34f9daf13c1b87f67d275635e984ed796671bedf86bd45d127572f', 'salt': '45DFd0CF6B6752E66a2F26BcBCB81ea9', '_id': ObjectId('66414ae73a9742ca9ba25b0a')}
+2024-05-12 20:41:14,120 - INFO - All entries in the user collection:
+2024-05-12 20:41:14,120 - INFO - {'_id': ObjectId('664118cc017af632f85e82f7'), 'user': 'jmorga50', 'pass': '2435ef82b975d852c2b73c085d12442b0bbb23a53eef00d02aa7c3bd23f6dc2d', 'salt': 'f46D7ECf67B6Fe7C5CBDc6343ABDD49f'}
+2024-05-12 20:41:14,121 - INFO - {'user': 'Kim', 'pass': '18892082535dbd4f140f7b4fb963a1fe1b21be8d0c279d9916650a6d3b60a6ea', 'salt': '9f00BA786c6910bb6b8c9EA39a2aC4fA', '_id': ObjectId('66414ac73a9742ca9ba25b09')}
+2024-05-12 20:41:14,121 - INFO - {'user': 'kimlin', 'pass': '3ce733831a34f9daf13c1b87f67d275635e984ed796671bedf86bd45d127572f', 'salt': '45DFd0CF6B6752E66a2F26BcBCB81ea9', '_id': ObjectId('66414ae73a9742ca9ba25b0a')}
+2024-05-12 20:41:18,819 - INFO - All entries in the user collection:
+2024-05-12 20:41:18,820 - INFO - {'_id': ObjectId('664118cc017af632f85e82f7'), 'user': 'jmorga50', 'pass': '2435ef82b975d852c2b73c085d12442b0bbb23a53eef00d02aa7c3bd23f6dc2d', 'salt': 'f46D7ECf67B6Fe7C5CBDc6343ABDD49f'}
+2024-05-12 20:41:18,820 - INFO - {'user': 'Kim', 'pass': '18892082535dbd4f140f7b4fb963a1fe1b21be8d0c279d9916650a6d3b60a6ea', 'salt': '9f00BA786c6910bb6b8c9EA39a2aC4fA', '_id': ObjectId('66414ac73a9742ca9ba25b09')}
+2024-05-12 20:41:18,820 - INFO - {'user': 'kimlin', 'pass': '3ce733831a34f9daf13c1b87f67d275635e984ed796671bedf86bd45d127572f', 'salt': '45DFd0CF6B6752E66a2F26BcBCB81ea9', '_id': ObjectId('66414ae73a9742ca9ba25b0a')}
+2024-05-12 20:42:19,207 - INFO - All entries in the user collection:
+2024-05-12 20:42:19,209 - INFO - {'_id': ObjectId('664118cc017af632f85e82f7'), 'user': 'jmorga50', 'pass': '2435ef82b975d852c2b73c085d12442b0bbb23a53eef00d02aa7c3bd23f6dc2d', 'salt': 'f46D7ECf67B6Fe7C5CBDc6343ABDD49f'}
+2024-05-12 20:42:19,210 - INFO - {'user': 'Kim', 'pass': '18892082535dbd4f140f7b4fb963a1fe1b21be8d0c279d9916650a6d3b60a6ea', 'salt': '9f00BA786c6910bb6b8c9EA39a2aC4fA', '_id': ObjectId('66414ac73a9742ca9ba25b09')}
+2024-05-12 20:42:19,210 - INFO - {'user': 'kimlin', 'pass': '3ce733831a34f9daf13c1b87f67d275635e984ed796671bedf86bd45d127572f', 'salt': '45DFd0CF6B6752E66a2F26BcBCB81ea9', '_id': ObjectId('66414ae73a9742ca9ba25b0a')}

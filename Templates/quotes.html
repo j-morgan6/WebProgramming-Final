@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Quotes</title>
+    <style>
+        body {
+            background-color: #fff8dc;
+            color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .bg-dark-subtle {
+            background-color: offwhite !important;
+        }
+        .bg-primary-subtle {
+            background-color: yellow !important;
+        }
+        .text-dark {
+            color: black !important;
+        }
+        .text-light {
+            color: offwhite !important;
+        }
+        input[type="checkbox"] {
+            width: 1.5em;
+            height: 1.5em;
+        }
+        .border {
+            border-color: royalblue !important;
+        }
+        .container-fluid {
+            width: 90%;
+        }
+        .rounded-5 {
+            border-radius: 0.5rem;
+        }
+        .quote-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .quote-list {
+            width: 45%;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="container-fluid d-flex flex-column align-items-center full-height h-100">
+    <div id="app" class="container-fluid d-flex flex-column align-items-center full-height h-100"></div>
+
+    <script type="module">
+        import { createApp, ref, reactive, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+        const Quote = {
+            props: ['text', 'id', 'author', 'public', 'searchStr', 'allowComments', 'comments', 'dateAdded'],
+            setup(props){
+            },
+            template:`
+                <li v-if="text.includes(searchStr) || author.includes(searchStr)" 
+                    class="w-100 p-3 h5 border rounded bg-primary-subtle text-dark d-flex flex-column">
+                    <p style="overflow-wrap: break-word;">{*text*}</p>
+                    <em class="ms-5">--{*author*}</em>
+                    <div class="align-self-end">
+                        <a :href="/edit/ + id"><i class="material-icons h3">mode_edit</i></a>
+                        <a :href="/delete/ + id"><i class="material-icons h3 text-danger">delete</i></a>
+                        <a v-if="allowComments" :href="'/add_comment/' + id"><i class="material-icons h3">add_comment</i></a>
+                    </div>
+                    <h4 v-if="allowComments && comments" class="container-fluid text-center">Comments</h4>
+                    <ul v-if="allowComments && comments" class="mt-2 container-fluid">
+                        <li v-for="comment in comments" class="w-100 p-3 h5 border rounded bg-light text-dark d-flex flex-column">
+                            <p style="overflow-wrap: break-word;">{* comment.text *}</p>
+                            <div class="align-self-end">
+                                <a :href="'/delete_comment/' + id + '/' + comment._id"><i class="material-icons h3 text-danger">delete</i></a>
+                            </div>
+                        </li>
+                    </ul>
+                    <em v-if="public" class="text-primary">public</em>
+                    <em v-if="dateAdded">{* dateAdded *}</em>
+                </li>
+            `,
+            delimiters: ['{*' ,'*}']
+        };    
+        const PublicQuote = {
+            props: ['text', 'id', 'author', 'owner', 'searchStr', 'allowComments', 'comments', 'user', 'dateAdded'],
+            setup(props){
+            },
+            template:`
+                <li v-if="text.includes(searchStr) || author.includes(searchStr) || owner.includes(searchStr)" 
+                    class="w-100 p-3 h5 border rounded bg-primary-subtle text-dark d-flex flex-column">
+                    <p style="overflow-wrap: break-word;">{*text*}</p>
+                    <em class="ms-5">--{*author*}</em>
+                    <p class="m-0 p-0 mt-3 text-primary"><em class="text-dark">Posted by: </em>{*owner*}</p>
+                    <div class="align-self-end">
+                        <a v-if="allowComments" :href="'/add_comment/' + id"><i class="material-icons h3">add_comment</i></a>
+                    </div>
+                    <h4 v-if="allowComments && comments" class="container-fluid text-center">Comments</h4>
+                    <ul v-if="allowComments && comments" class="mt-2 container-fluid">
+                        <li v-for="comment in comments" class="w-100 p-3 h5 border rounded bg-light text-dark d-flex flex-column">
+                            <p style="overflow-wrap: break-word;">{* comment.text *}</p>
+                            <div class="align-self-end">
+                                <a v-if="comment.user === user" :href="'/delete_comment/' + id + '/' + comment._id"><i class="material-icons h3 text-danger">delete</i></a>
+                            </div>
+                        </li>
+                    </ul>
+                    <em v-if="dateAdded">{* dateAdded *}</em>
+                </li>
+            `,
+            delimiters: ['{*' ,'*}']
+        };    
+        const QuotePage = {
+            setup(){
+                const userQuotes = ref([])
+                const pubQuotes = ref([])
+                const user = ref("")
+                const showUserQuotes = ref(true)
+                const showPubQuotes = ref(true)
+                const searchStr = ref("")
+
+                async function FetchQuotes(){
+                    fetch('/api/quotes').then((response) =>{
+                        if(!response.ok){
+                            throw new Error("Could not fetch quotes")
+                        }
+                        return response.json()
+                    }).then((data) => {
+                        userQuotes.value = data.quotes
+                        pubQuotes.value = data.publicQuotes
+                        user.value = data.user
+                        console.log(userQuotes.value)
+                    }).catch(err =>{
+                        console.log(err)
+                    })
+                }
+
+                FetchQuotes()
+
+                return{
+                    userQuotes,
+                    pubQuotes,
+                    showPubQuotes,
+                    showUserQuotes,
+                    searchStr,
+                    user
+                }
+            },
+            components: {
+                Quote,
+                PublicQuote
+            },
+            template: `
+               <div class="container-fluid d-flex flex-column align-items-center full-height h-100">
+                    <p class="align-self-end m-3 h5">{*user*}(<a class="text-danger" href="/logout">Logout</a>)</p>
+                    <div class="quote-container">
+                        <div class="quote-list">
+                            <div class="search-container">
+                                <label class="h5" for="searchBar">Search Quotes:</label>
+                                <input type="search" id="searchBar" placeholder="Search..." v-model="searchStr" class="search-bar">
+                            </div>
+                            <h1 class="mt-2 text-light" style="color: black !important;">{*user*}'s Quotes</h1>
+                            <ul v-if="showUserQuotes" class="mt-2 container-fluid">
+                                <quote
+                                    v-for="quote in userQuotes"
+                                    :key="quote.id"
+                                    :text="quote.text"
+                                    :id="quote._id"
+                                    :author="quote.author"
+                                    :public="quote.public"
+                                    :searchStr="searchStr"
+                                    :allowComments="quote.allow_comment"
+                                    :comments="quote.comments"
+                                    :dateAdded="quote.date_added"
+                                />
+                            </ul>
+                        </div>
+                        <div class="quote-list">
+                            <h1 class="mt-2 text-light" style="color: black !important;">Public Quotes</h1>
+                            <ul v-if="showPubQuotes" class="mt-2 container-fluid">
+                                <public-quote
+                                    v-for="quote in pubQuotes"
+                                    :key="quote.id"
+                                    :text="quote.text"
+                                    :id="quote._id"
+                                    :author="quote.author"
+                                    :owner="quote.owner"
+                                    :searchStr="searchStr"
+                                    :allowComments="quote.allow_comment"
+                                    :comments="quote.comments"
+                                    :user="user"
+                                    :dateAdded="quote.date_added"
+                                />
+                            </ul>
+                        </div>
+                    </div>
+                    <hr/>
+                    <a href="/add" class="h5 text-primary">{*"Add a quote"*}</a>
+                    <hr />
+                </div> 
+            `,
+            delimiters: ['{*' ,'*}']
+        };
+
+        const app = createApp(QuotePage)
+
+        const vm = app.mount('#app')
+    </script>
+</body>
+</html>
